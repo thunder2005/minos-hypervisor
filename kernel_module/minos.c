@@ -88,7 +88,7 @@ static int mvm_open(struct inode *inode, struct file *file)
 		pr_err("no such vm with vmid:%d\n", vmid);
 		return -ENOENT;
 	}
-	
+
 	file->private_data = vm;
 	replace_fops(file, new_fops);
 	err = 0;
@@ -259,7 +259,7 @@ static int vm0_release(struct inode *inode, struct file *filp)
 static int create_new_vm(struct vm_info *info)
 {
 	int vmid;
-	
+
 	if (!info)
 		return -EINVAL;
 
@@ -352,7 +352,7 @@ static int __init minos_init(void)
 		return err;
 	}
 
-	vm_class->devnode = vm_devnode; 
+	vm_class->devnode = vm_devnode;
 
 	err = create_vm_device(0, NULL);
 	if (err) {

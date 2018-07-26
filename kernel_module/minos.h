@@ -105,7 +105,7 @@ static inline int hvc_vm_mmap(int vmid, uint64_t offset, uint64_t size,
 		uint64_t *maddr, uint64_t *msize)
 {
 	int ret;
-	
+
 	ret = minos_hvc3(HVC_VM_MMAP, vmid, offset, size);
 	minos_hvc_result2(maddr, msize);
 

@@ -22,7 +22,7 @@ inc	:= mvm.h
 
 $(TARGET) : $(src) $(inc)
 	$(PROGRESS)
-	$(QUIET) $(CC) $(CFLAG) $(src) -o $(TARGET) 
+	$(QUIET) $(CC) $(CFLAG) $(src) -o $(TARGET)
 	$(QUIET) $(STRIP) -s $(TARGET)
 
 
