@@ -89,4 +89,3 @@ int read_bootimage_header(int fd, boot_img_hdr *hdr)
 
 	return 0;
 }
-
