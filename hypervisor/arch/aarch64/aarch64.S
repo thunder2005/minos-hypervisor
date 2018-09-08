@@ -16,16 +16,21 @@
 
 #include <asm/aarch64_common.h>
 #include <asm/asm_marco.S>
+#include <config/config.h>
 
-	.global get_cpu_id
+	.global smp_processor_id
 	.global arch_get_fp
 	.global arch_get_lr
+	.global smc_call
 
-func get_cpu_id
+func smp_processor_id
 	mrs 	x0, MPIDR_EL1
-    	ubfx    x0, x0, #MPIDR_EL1_AFF0_LSB, #MPIDR_EL1_AFF_WIDTH
+	ubfx    x1, x0, #MPIDR_EL1_AFF0_LSB, #MPIDR_EL1_AFF_WIDTH
+	ubfx    x2, x0, #MPIDR_EL1_AFF1_LSB, #MPIDR_EL1_AFF_WIDTH
+	lsl	x2, x2, #CONFIG_AFF1_SHIFT
+	add	x0, x2, x1
     	ret
-endfunc get_cpu_id
+endfunc smp_processor_id
 
 func arch_get_fp
 	mov	x0, x29
@@ -36,3 +41,8 @@ func arch_get_lr
 	mov	x0, x30
 	ret
 endfunc arch_get_lr
+
+func smc_call
+	smc	#0
+	ret
+endfunc smc_call

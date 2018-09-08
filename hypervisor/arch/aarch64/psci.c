@@ -14,16 +14,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <minos/minos.h>
+#include <config/config.h>
 #include <asm/psci.h>
+#include <minos/arch.h>
 
-extern int mvebu_serial_probe(void *addr);
-
-int serial_init(void)
+static inline unsigned long psci_fn(uint32_t id, unsigned long a1,
+		unsigned long a2, unsigned long a3)
 {
-	return mvebu_serial_probe((void *)0xd0012000);
+	return smc_call(id, a1, a2, a3, 0, 0, 0);
 }
 
-int cpu_on(int cpu, unsigned long entry)
+unsigned long psci_cpu_on(unsigned long cpu, unsigned long entry)
 {
-	return psci_cpu_on(cpu, entry);
+	return psci_fn(PSCI_0_2_FN_CPU_ON, cpu, entry, 0);
+}
+
+unsigned long psci_cpu_off(unsigned long cpu)
+{
+	return psci_fn(PSCI_0_2_FN_CPU_OFF, cpu, 0, 0);
 }
