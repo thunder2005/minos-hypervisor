@@ -677,6 +677,9 @@ static int virq_create_vm(void *item, void *args)
 
 	vm_config_virq(vm);
 
+	/* mask the static irq number which used in hypervisor */
+
+
 	return 0;
 }
 
